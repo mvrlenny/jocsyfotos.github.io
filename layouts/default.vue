@@ -14,7 +14,7 @@
     <Container class="relative">
       <div class="absolute top-0 right-0">
         <NuxtImg
-          src="img/bg-glow.png"
+          src="/img/bg-glow.png"
           aria-hidden="true"
           class="w-[44rem]"
           format="webp"
