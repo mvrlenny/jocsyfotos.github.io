@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { withTrailingSlash } from "ufo";
+import type { Gallery } from "~/types/gallery";
 
 const props = defineProps({
   path: {
@@ -8,10 +9,12 @@ const props = defineProps({
   },
 });
 
-const { data: _galleries } = await useAsyncData(
+const { data: _galleries } = await useAsyncData<Gallery[]>(
   "galleries",
-  async () =>
-    await queryContent(withTrailingSlash(props.path)).find()
+  async () => {
+    const raw = await queryContent(withTrailingSlash(props.path)).find();
+    return (raw as any[]).filter((g): g is Gallery => typeof g?._path === 'string' && typeof g?.title === 'string');
+  }
 );
 
 const galleries = computed(() => _galleries.value || [])

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { bgClass, gradClass, roundnessClass, contentClass, as } = withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
     bgClass?: string;
     gradClass?: string;
     roundnessClass?: string;
@@ -15,10 +15,10 @@ const { bgClass, gradClass, roundnessClass, contentClass, as } = withDefaults(de
 </script>
 
 <template>
-    <component :is="as" :class="$cls('group relative p-8', roundnessClass)" v-bind="$attrs">
-        <div :class="$cls('absolute -inset-px', gradClass, roundnessClass)" aria-hidden="true"></div>
-        <div :class="$cls('absolute inset-0', bgClass, roundnessClass)" aria-hidden="true"></div>
-        <div class="relative z-10" :class="contentClass">
+    <component :is="props.as" :class="$cls('group relative p-8', props.roundnessClass)" v-bind="$attrs">
+        <div :class="$cls('absolute -inset-px', props.gradClass, props.roundnessClass)" aria-hidden="true"></div>
+        <div :class="$cls('absolute inset-0', props.bgClass, props.roundnessClass)" aria-hidden="true"></div>
+        <div class="relative z-10" :class="props.contentClass">
             <slot />
         </div>
     </component>

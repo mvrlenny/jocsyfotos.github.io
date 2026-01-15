@@ -1,10 +1,12 @@
 <script setup lang="ts">
-import type { Image } from "~/../types/image";
+import type { PropType } from 'vue';
+import type { Image } from "~/types/image";
 type Gallery = {
   _path: string;
   title: string;
   description?: string;
   cover?: Image;
+  images?: Image[];
 };
 
 const props = defineProps({
@@ -38,13 +40,13 @@ const props = defineProps({
       />
       <div class="absolute bottom-0 w-full p-4 grid grid-cols-4 gap-3" v-if="gallery?.images?.length">
         <div
-          v-for="thumbnail, index in gallery.images.slice(0, 4)"
+          v-for="(thumbnail, index) in gallery.images.slice(0, 4)"
           :key="index"
           class="col-span-1 aspect-square w-full rounded-lg overflow-hidden group-hover:opacity-75 dark:bg-zinc-800"
         >
           <NuxtImg
             :src="thumbnail.src"
-            alt="thumbnail.alt"
+            :alt="thumbnail.alt || gallery.title"
             class="h-full w-full object-cover object-center"
             loading="lazy"
             sizes="sm:70px md:75px"

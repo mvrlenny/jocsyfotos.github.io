@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { withTrailingSlash } from "ufo";
+import type { Story } from "~/types/story";
 
 const props = defineProps({
   path: {
@@ -8,10 +9,12 @@ const props = defineProps({
   },
 });
 
-const { data: _stories } = await useAsyncData(
+const { data: _stories } = await useAsyncData<Story[]>(
   "stories",
-  async () =>
-    await queryContent(withTrailingSlash(props.path)).sort({ date: -1 }).find()
+  async () => {
+    const raw = await queryContent(withTrailingSlash(props.path)).sort({ date: -1 }).find();
+    return (raw as any[]).filter((s): s is Story => typeof s?._path === 'string' && typeof s?.title === 'string');
+  }
 );
 
 const stories = computed(() => _stories.value || []);
