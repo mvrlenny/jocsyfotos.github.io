@@ -25,7 +25,7 @@
             </a href>
           </li>
           <li>
-            <a href="https://x.com/jocsy.fotos" class="flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-100">
+            <a href="https://x.com/jocsy_fotos" class="flex items-center gap-2 text-sm text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-100">
               <Icon name="fe:twitter" size="1.8rem" />
               <span>@jocsy.fotos</span>
             </a href>
