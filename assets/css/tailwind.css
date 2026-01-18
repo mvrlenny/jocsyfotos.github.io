@@ -37,3 +37,23 @@
   opacity: 0;
   transform: translate3d(0, 10%, 0);
 }
+
+/* Responsive images: preserve intrinsic aspect ratio, fit within container,
+   never stretch, shrink when needed, and don't expand beyond original size */
+img,
+picture img,
+.nuxt-img,
+.nuxt-img img {
+  display: block;
+  max-width: 100%; /* prevent overflow of container */
+  width: auto;     /* do not stretch to fill container if larger */
+  height: auto;    /* keep aspect ratio */
+  object-fit: contain;
+}
+
+/* Utility class when you want image to cover its container while preserving aspect ratio */
+.img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
