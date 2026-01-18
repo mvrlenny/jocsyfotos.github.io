@@ -21,6 +21,26 @@ const props = defineProps({
     },
   },
 });
+
+const coverSrc = computed(() => {
+  const c: any = (props as any)?.gallery?.cover
+  // handle object { src } or string paths in gallery.images
+  if (c && typeof c === 'object' && c.src) return c.src.startsWith('/') ? c.src : `/${c.src}`
+  const imgs: any = (props as any)?.gallery?.images || []
+  if (imgs.length) {
+    const first = imgs[0]
+    if (typeof first === 'string') return first.startsWith('/') ? first : `/${first}`
+    if (first && first.src) return first.src.startsWith('/') ? first.src : `/${first.src}`
+  }
+  return '/img/placeholder.jpg'
+})
+
+function thumbSrc(thumbnail: any) {
+  if (!thumbnail) return '/img/placeholder.jpg'
+  if (typeof thumbnail === 'string') return thumbnail.startsWith('/') ? thumbnail : `/${thumbnail}`
+  if (thumbnail.src) return thumbnail.src.startsWith('/') ? thumbnail.src : `/${thumbnail.src}`
+  return '/img/placeholder.jpg'
+}
 </script>
 
 <template>
@@ -29,14 +49,14 @@ const props = defineProps({
       class="relative w-full overflow-hidden rounded-lg aspect-[3/2] md:aspect-[2/3] dark:bg-zinc-800"
     >
       <NuxtImg
-        :src="gallery.cover?.src || 'img/placeholder.jpg'"
-        :alt="gallery.cover?.alt || gallery.title"
+        :src="coverSrc"
+        :alt="(gallery.cover && gallery.cover.alt) || gallery.title"
         :width="gallery.cover?.width"
         :height="gallery.cover?.height"
         class="h-full w-full object-cover object-center group-hover:opacity-75"
         sizes="sm:100vw md:50vw lg:30vw"
         loading="lazy"
-        placeholder
+        placeholder="empty"
         onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
       />
       <div class="absolute bottom-0 w-full p-4 grid grid-cols-4 gap-3" v-if="gallery?.images?.length">
@@ -46,8 +66,8 @@ const props = defineProps({
           class="col-span-1 aspect-square w-full rounded-lg overflow-hidden group-hover:opacity-75 dark:bg-zinc-800"
         >
           <NuxtImg
-            :src="thumbnail.src"
-            :alt="thumbnail.alt || gallery.title"
+            :src="thumbSrc(thumbnail)"
+            :alt="(thumbnail && thumbnail.alt) || gallery.title"
             class="h-full w-full object-cover object-center"
             loading="lazy"
             sizes="sm:70px md:75px"

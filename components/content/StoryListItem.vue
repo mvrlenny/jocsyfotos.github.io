@@ -11,7 +11,7 @@ type Story = {
   tags?: string[];
 };
 
-defineProps({
+const props = defineProps({
   story: {
     type: Object as PropType<Story>,
     required: true,
@@ -23,6 +23,20 @@ defineProps({
     }
   },
 });
+
+// compute cover src (support string or object)
+const coverSrcStory = computed(() => {
+  // @ts-ignore
+  const c: any = (props as any)?.story?.cover
+  if (c && typeof c === 'object' && c.src) return c.src.startsWith('/') ? c.src : `/${c.src}`
+  const imgs: any = (props as any)?.story?.images || []
+  if (imgs.length) {
+    const first = imgs[0]
+    if (typeof first === 'string') return first.startsWith('/') ? first : `/${first}`
+    if (first && first.src) return first.src.startsWith('/') ? first.src : `/${first.src}`
+  }
+  return '/img/placeholder.jpg'
+})
 </script>
 
 <template>
@@ -31,14 +45,14 @@ defineProps({
       class="relative w-full overflow-hidden rounded-lg sm:aspect-[3/2] md:aspect-square lg:aspect-[2/3] dark:bg-zinc-800"
     >
       <NuxtImg
-        :src="story.cover?.src || 'img/placeholder.jpg'"
-        :alt="story.cover?.alt || story.title" 
+        :src="coverSrcStory"
+        :alt="(story.cover && story.cover.alt) || story.title"
         :width="story.cover?.width || 2"
         :height="story.cover?.height || 3"
         class="h-full w-full object-cover object-center group-hover:opacity-75"
         sizes="sm:100vw md:50vw lg:30vw"
         loading="lazy"
-        placeholder
+        placeholder="empty"
         onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
       />
     </div>

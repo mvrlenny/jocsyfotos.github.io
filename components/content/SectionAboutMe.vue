@@ -36,8 +36,7 @@ defineProps({
         data-parallax-speed="-1" data-rellax-percentage="0.5" class="col-span-3 order-1 lg:order-2 pl-2 pt-2">
         <div class="lg:absolute aspect-square lg:aspect-[2/3] flex-none overflow-hidden bg-zinc-100 dark:bg-zinc-800 w-32 lg:w-72 rounded-2xl rotate-3">
           <NuxtImg
-            placeholder
-            :src="photo?.src ? photo.src : 'img/placeholder.jpg'"
+            :src="photo?.src ? (photo.src.startsWith('/') ? photo.src : '/' + photo.src) : '/img/placeholder.jpg'"
             :alt="photo?.alt ? photo.alt : 'Oscar Mattern'"
             :width="photo?.width ? photo.width : 1"
             :height="photo?.height ? photo.height : 1"
