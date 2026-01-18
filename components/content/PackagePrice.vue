@@ -17,7 +17,7 @@
           :class="[image ? 'bg-zinc-200 dark:bg-zinc-800' : 'bg-zinc-100 dark:bg-zinc-800/30']"
         >
           <div v-if="image" class="absolute inset-0 mix-blend-overlay">
-            <NuxtImg :src="image.src" :alt="image.alt" :width="image.width" :height="image.height" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='/img/placeholder.jpg'" />
+            <img :src="image.src" :alt="image.alt" :width="image.width" :height="image.height" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='/img/placeholder.jpg'" />
           </div>
           <div class="mx-auto max-w-xs px-8 z-10">
             <p class="flex items-baseline justify-center gap-x-2">

@@ -9,17 +9,7 @@
         type="button"
         aria-label="Open image"
       >
-        <NuxtImg
-          v-if="hasImage"
-          :src="normalize(src)"
-          :alt="`Image ${i + 1}`"
-          class="w-full h-full object-cover"
-          sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 25vw"
-          loading="lazy"
-          placeholder="empty"
-        />
         <img
-          v-else
           :src="normalize(src)"
           :alt="`Image ${i + 1}`"
           class="w-full h-full object-cover"
@@ -31,14 +21,7 @@
     <div v-if="opened !== null" class="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
       <button class="absolute top-4 right-4 text-white text-2xl" @click="close" aria-label="Close">✕</button>
       <div class="max-w-[95vw] max-h-[95vh]">
-        <NuxtImg
-          v-if="hasImage"
-          :src="normalize(imagesList[opened])"
-          class="max-w-full max-h-[90vh] object-contain"
-          :alt="`Open image ${opened + 1}`"
-        />
         <img
-          v-else
           :src="normalize(imagesList[opened])"
           class="max-w-full max-h-[90vh] object-contain"
           :alt="`Open image ${opened + 1}`"
@@ -56,15 +39,11 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { useNuxtApp } from '#app'
 
 const props = defineProps<{
   images?: Array<string | { src: string; alt?: string }>
   contentPath?: string
 }>()
-
-const nuxtApp = useNuxtApp()
-const hasImage = Boolean(nuxtApp?.$image)
 
 const opened = ref<number | null>(null)
 const localImages = ref<Array<string | { src: string; alt?: string }>>([])

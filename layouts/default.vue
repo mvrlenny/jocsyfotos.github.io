@@ -13,11 +13,10 @@
     <!-- background -->
     <Container class="relative">
       <div class="absolute top-0 right-0">
-        <NuxtImg
+        <img
           src="/img/bg-glow.png"
           aria-hidden="true"
           class="w-[44rem]"
-          format="webp"
           width="944"
           height="586"
           onerror="this.onerror=null;this.src='/img/placeholder.jpg'"

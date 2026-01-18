@@ -40,11 +40,11 @@ const coverSrcStory = computed(() => {
 </script>
 
 <template>
-  <NuxtLink :to="story._path" class="group">
+    <NuxtLink :to="story._path" class="group">
     <div
       class="relative w-full overflow-hidden rounded-lg sm:aspect-[3/2] md:aspect-square lg:aspect-[2/3] dark:bg-zinc-800"
     >
-      <NuxtImg
+      <img
         :src="coverSrcStory"
         :alt="(story.cover && story.cover.alt) || story.title"
         :width="story.cover?.width || 2"
@@ -52,7 +52,6 @@ const coverSrcStory = computed(() => {
         class="h-full w-full object-cover object-center group-hover:opacity-75"
         sizes="sm:100vw md:50vw lg:30vw"
         loading="lazy"
-        placeholder="empty"
         onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
       />
     </div>

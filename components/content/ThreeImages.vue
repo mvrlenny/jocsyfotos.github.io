@@ -14,7 +14,7 @@ const { src1, src2, src3, alt1, alt2, alt3 } = defineProps<{
     <div
       class="col-span-2 row-span-2 dark:bg-gray-800 rounded-md lg:rounded-xl overflow-hidden"
     >
-      <NuxtImg
+      <img
         :src="src1"
         :alt="alt1"
         loading="lazy"
@@ -24,7 +24,7 @@ const { src1, src2, src3, alt1, alt2, alt3 } = defineProps<{
       />
     </div>
     <div class="col-span-1 dark:bg-gray-800 rounded-md lg:rounded-xl overflow-hidden">
-      <NuxtImg
+      <img
         :src="src2"
         :alt="alt2"
         loading="lazy"
@@ -34,7 +34,7 @@ const { src1, src2, src3, alt1, alt2, alt3 } = defineProps<{
       />
     </div>
     <div class="col-span-1 dark:bg-gray-800 rounded-md lg:rounded-xl overflow-hidden">
-      <NuxtImg
+      <img
         :src="src3"
         :alt="alt3"
         loading="lazy"

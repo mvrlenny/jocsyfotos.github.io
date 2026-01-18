@@ -26,7 +26,7 @@ defineProps({
         <div class="dark:text-zinc-400 flex flex-col gap-4">
           <slot name="description"></slot>
         </div>
-        <NuxtImg src="/img/home/sign.png" alt="signature" class="h-8 mr-auto" onerror="this.onerror=null;this.src='/img/placeholder.jpg'" />
+        <img src="/img/home/sign.png" alt="signature" class="h-8 mr-auto" onerror="this.onerror=null;this.src='/img/placeholder.jpg'" />
       </div>
 
       <div v-parallax 
@@ -35,12 +35,11 @@ defineProps({
         data-rellax-tablet-speed="0"
         data-parallax-speed="-1" data-rellax-percentage="0.5" class="col-span-3 order-1 lg:order-2 pl-2 pt-2">
         <div class="lg:absolute aspect-square lg:aspect-[2/3] flex-none overflow-hidden bg-zinc-100 dark:bg-zinc-800 w-32 lg:w-72 rounded-2xl rotate-3">
-          <NuxtImg
+          <img
             :src="photo?.src ? (photo.src.startsWith('/') ? photo.src : '/' + photo.src) : '/img/placeholder.jpg'"
             :alt="photo?.alt ? photo.alt : 'Oscar Mattern'"
             :width="photo?.width ? photo.width : 1"
             :height="photo?.height ? photo.height : 1"
-            format="webp"
             loading="lazy"
             class="h-full w-full object-cover"
             sizes="sm:50vw md:50vw lg:30vw"

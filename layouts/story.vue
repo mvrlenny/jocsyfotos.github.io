@@ -7,7 +7,7 @@
     </div>
     <Container class="relative">
         <div class="absolute top-0 right-0">
-        <NuxtImg src="/img/bg-glow.png" aria-hidden="true" class="w-[44rem]" format="webp" width="944" height="586" onerror="this.onerror=null;this.src='/img/placeholder.jpg'" />
+        <img src="/img/bg-glow.png" aria-hidden="true" class="w-[44rem]" width="944" height="586" onerror="this.onerror=null;this.src='/img/placeholder.jpg'" />
       </div>
     </Container>
     <div class="relative">

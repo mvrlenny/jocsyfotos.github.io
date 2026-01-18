@@ -5,9 +5,8 @@ const { src, alt } = defineProps<{
 }>();
 </script>
 <template>
-  <NuxtImg
+  <img
     v-if="src"
-    placeholder="empty"
     sizes="sm:100vw md:70vw"
     class="w-full"
     :src="src"

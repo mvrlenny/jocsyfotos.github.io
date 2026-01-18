@@ -8,12 +8,13 @@
           :key="img + idx"
           class="overflow-hidden rounded shadow-sm bg-gray-50"
         >
-          <NuxtImg
+          <img
             :src="img"
             :alt="`Gallery image ${idx + 1}`"
             class="w-full h-full object-contain"
             sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 25vw"
             loading="lazy"
+            onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
           />
         </div>
       </div>
