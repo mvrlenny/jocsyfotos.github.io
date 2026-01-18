@@ -51,6 +51,7 @@ const defaultImage = "img/placeholder.jpg";
             :height="image1?.height ? image1.height : 1"
             format="webp"
             loading="lazy"
+            onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
           />
         </div>
       </div>
@@ -68,6 +69,7 @@ const defaultImage = "img/placeholder.jpg";
             :height="image2?.height ? image2.height : 1"
             format="webp"
             loading="lazy"
+            onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
           />
         </div>
         <div class="relative aspect-[3/4] w-44 md:w-52 flex-none overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800">
@@ -81,6 +83,7 @@ const defaultImage = "img/placeholder.jpg";
             :height="image3?.height ? image3.height : 1"
             format="webp"
             loading="lazy"
+            onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
           />
         </div>
       </div>
@@ -98,6 +101,7 @@ const defaultImage = "img/placeholder.jpg";
             :height="image4?.height ? image4.height : 1"
             format="webp"
             loading="lazy"
+            onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
           />
         </div>
       </div>
@@ -115,6 +119,7 @@ const defaultImage = "img/placeholder.jpg";
             :height="image5?.height ? image5.height : 1"
             format="webp"
             loading="lazy"
+            onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
           />
         </div>
         <div class="relative aspect-[4/3] w-44 md:w-52 flex-none overflow-hidden rounded-xl bg-zinc-100 dark:bg-zinc-800">
@@ -128,6 +133,7 @@ const defaultImage = "img/placeholder.jpg";
             :height="image6?.height ? image6.height : 1"
             format="webp"
             loading="lazy"
+            onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
           />
         </div>
       </div>
@@ -145,6 +151,7 @@ const defaultImage = "img/placeholder.jpg";
             :height="image7?.height ? image7.height : 1"
             format="webp"
             loading="lazy"
+            onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
           />
         </div>
       </div>

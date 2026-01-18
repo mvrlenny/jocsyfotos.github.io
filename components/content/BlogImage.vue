@@ -13,5 +13,6 @@ const { src, alt } = defineProps<{
     :src="src"
     :alt="alt"
     loading="lazy"
+    onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
   />
 </template>

@@ -39,6 +39,7 @@ defineProps({
         sizes="sm:100vw md:50vw lg:30vw"
         loading="lazy"
         placeholder
+        onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
       />
     </div>
     <div

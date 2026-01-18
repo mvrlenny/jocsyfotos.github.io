@@ -20,6 +20,7 @@
           format="webp"
           width="944"
           height="586"
+          onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
         />
       </div>
     </Container>

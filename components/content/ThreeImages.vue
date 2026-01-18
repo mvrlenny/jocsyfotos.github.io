@@ -20,6 +20,7 @@ const { src1, src2, src3, alt1, alt2, alt3 } = defineProps<{
         loading="lazy"
         class="h-full w-full object-cover object-center"
         sizes="sm:100vw md:50vw"
+        onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
       />
     </div>
     <div class="col-span-1 dark:bg-gray-800 rounded-md lg:rounded-xl overflow-hidden">
@@ -29,6 +30,7 @@ const { src1, src2, src3, alt1, alt2, alt3 } = defineProps<{
         loading="lazy"
         class="h-full w-full object-cover object-center"
         sizes="sm:100vw md:30vw"
+        onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
       />
     </div>
     <div class="col-span-1 dark:bg-gray-800 rounded-md lg:rounded-xl overflow-hidden">
@@ -38,6 +40,7 @@ const { src1, src2, src3, alt1, alt2, alt3 } = defineProps<{
         loading="lazy"
         class="h-full w-full object-cover object-center"
         sizes="sm:100vw md:30vw"
+        onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
       />
     </div>
   </div>

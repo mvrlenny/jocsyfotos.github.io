@@ -37,6 +37,7 @@ const props = defineProps({
         sizes="sm:100vw md:50vw lg:30vw"
         loading="lazy"
         placeholder
+        onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
       />
       <div class="absolute bottom-0 w-full p-4 grid grid-cols-4 gap-3" v-if="gallery?.images?.length">
         <div
@@ -51,6 +52,7 @@ const props = defineProps({
             loading="lazy"
             sizes="sm:70px md:75px"
             placeholder
+            onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
           />
         </div>
       </div>

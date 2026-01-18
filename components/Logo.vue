@@ -11,6 +11,7 @@
         format="webp"
         width="100"
         height="100"
+        onerror="this.onerror=null;this.src='/img/placeholder.jpg'"
       />
     </div>
     <span class="uppercase tracking-widest hidden md:inline-flex shrink-1 sr-only">Jocselyn Mora</span>
