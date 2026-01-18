@@ -27,8 +27,12 @@ export default defineNuxtConfig({
 
 
 image: {
-  provider: "static",
-  static: {}
+  // Use the IPX provider for runtime image handling. 'static' provider may not
+  // be available depending on installed modules; using 'ipx' keeps dynamic
+  // behavior and works both in dev and production when the image module is
+  // installed as a dependency.
+  provider: 'ipx',
+  ipx: {}
 },
 
   
