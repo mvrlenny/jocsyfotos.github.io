@@ -27,7 +27,7 @@ defineProps({
           <h1 class="font-thin font-display text-5xl text-gradient leading-tighter w-max max-w-full">{{ title }}</h1>
         </div>
         <div class="max-w-2xl">
-          <p class="mt-6 lg:mt-9 dark:text-zinc-500">
+          <p class="mt-6 lg:mt-9 dark:text-zinc-500 space-y-6">
             <slot name="description">{{ description }}</slot>
           </p>
         </div>
