@@ -3,7 +3,8 @@ const links = [
   { name: "Home", to: "/" },
   { name: "Galleries", to: "/galleries" },
   { name: "Stories", to: "/stories" },
-  { name: "Hire me", to: "/hire-me" },
+  { name: "Princing & FAQ", to: "/hire-me" },
+  { name: "Contact", to: "/contact" },
 ] as { name: string; to: string }[];
 
 onMounted(() => {
