@@ -1,34 +1,87 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
-// Sets minimum date to tomorrow
+// Minimum date = tomorrow
 const today = new Date()
 today.setDate(today.getDate() + 1)
 const tomorrow = today.toISOString().split('T')[0]
+
+// ⏱️ Time tracking
+const startTime = ref(0)
+
+onMounted(() => {
+  startTime.value = Date.now()
+})
+
+// Handle submit
+const handleSubmit = (e) => {
+  const timeTaken = Date.now() - startTime.value
+  const honeypot = e.target.website?.value
+
+  let isSuspicious = false
+
+  // 🪤 Honeypot triggered → HIGH suspicion
+  if (honeypot) {
+    console.warn("⚠️ Honeypot triggered (likely bot)")
+    isSuspicious = true
+  }
+
+  // ⏱️ Too fast → suspicious
+  if (timeTaken < 3000) {
+    console.warn(`⚠️ Submitted too fast (${timeTaken}ms)`)
+    isSuspicious = true
+  }
+
+  // 🧠 Attach flag to form (goes to Netlify)
+  if (isSuspicious) {
+    const input = document.createElement('input')
+    input.type = 'hidden'
+    input.name = 'suspicious'
+    input.value = 'true'
+    e.target.appendChild(input)
+  }
+
+  // ✅ DO NOT block — allow submission
+}
 </script>
 
 <template>
   <section class="mt-16 max-w-2xl mx-auto bg-zinc-50 dark:bg-zinc-900/40 p-8 rounded-3xl shadow-sm">
-    <form name="contact" method="POST" data-netlify="true" class="space-y-6">
+    
+    <form 
+      name="contact"
+      method="POST"
+      data-netlify="true"
+      netlify-honeypot="website"
+      @submit="handleSubmit"
+      class="space-y-6"
+    >
+      <!-- Netlify required -->
       <input type="hidden" name="form-name" value="contact" />
+
+      <!-- 🪤 Honeypot -->
+      <div style="position:absolute; left:-9999px;">
+        <label>Don’t fill this out if you're human:</label>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" />
+      </div>
 
       <!-- Name -->
       <div>
         <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">Full Name</label>
-        <input type="text" name="name"
+        <input type="text" name="name" required
           class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:ring-2 focus:ring-black/20 outline-none"
-          required />
+        />
       </div>
 
       <!-- Email -->
       <div>
         <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">Email</label>
-        <input type="email" name="email"
+        <input type="email" name="email" required
           class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:ring-2 focus:ring-black/20 outline-none"
-          required />
+        />
       </div>
 
-      <!-- Session Type -->
+      <!-- Session -->
       <div>
         <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">Type of Session</label>
         <select name="session"
@@ -43,26 +96,27 @@ const tomorrow = today.toISOString().split('T')[0]
         </select>
       </div>
 
-      <!-- Vision / Message -->
+      <!-- Message -->
       <div>
         <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">Tell us about your vision</label>
         <textarea name="message" rows="5"
-          class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800"></textarea>
+          class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800"
+        ></textarea>
       </div>
 
-      <!-- Date Picker -->
+      <!-- Date -->
       <div>
         <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">Preferred Date</label>
         <input 
           type="date"
           name="date"
           :min="tomorrow"
-          class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800"
           required
+          class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800"
         />
       </div>
 
-      <!-- Start Time (free input) -->
+      <!-- Time -->
       <div>
         <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">Preferred Start Time</label>
         <input
@@ -86,16 +140,17 @@ const tomorrow = today.toISOString().split('T')[0]
         </select>
       </div>
 
-      <!-- Submit Button -->
+      <!-- Submit -->
       <button
         class="w-full py-4 text-lg font-semibold rounded-xl bg-black text-white hover:bg-zinc-800 transition-all">
         Send Inquiry
       </button>
 
-        <!-- Privacy Note -->
+      <!-- Privacy -->
       <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-2">
         We respect your privacy. Your information will only be used to respond to your inquiry.
       </p>
+
     </form>
   </section>
 </template>
