@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 
-// Minimum date = tomorrow
+// 📅 Minimum date = tomorrow
 const today = new Date()
 today.setDate(today.getDate() + 1)
 const tomorrow = today.toISOString().split('T')[0]
@@ -13,53 +13,66 @@ onMounted(() => {
   startTime.value = Date.now()
 })
 
-// Handle submit
-const handleSubmit = (e) => {
+// 🧠 Handle submit (Netlify + Anti-spam)
+const handleSubmit = async (e) => {
+  const form = e.target
   const timeTaken = Date.now() - startTime.value
-  const honeypot = e.target.website?.value
+  const honeypot = form.website?.value
 
   let isSuspicious = false
 
-  // 🪤 Honeypot triggered → HIGH suspicion
+  // 🪤 Honeypot triggered
   if (honeypot) {
-    console.warn("⚠️ Honeypot triggered (likely bot)")
+    console.warn("⚠️ Honeypot triggered (bot)")
     isSuspicious = true
   }
 
-  // ⏱️ Too fast → suspicious
+  // ⏱️ Too fast
   if (timeTaken < 3000) {
-    console.warn(`⚠️ Submitted too fast (${timeTaken}ms)`)
+    console.warn(`⚠️ Too fast (${timeTaken}ms)`)
     isSuspicious = true
   }
 
-  // 🧠 Attach flag to form (goes to Netlify)
+  // 🧠 Attach hidden flags
+  const formData = new FormData(form)
+  formData.append("form-name", "contact")
+  formData.append("timeTaken", timeTaken.toString())
+
   if (isSuspicious) {
-    const input = document.createElement('input')
-    input.type = 'hidden'
-    input.name = 'suspicious'
-    input.value = 'true'
-    e.target.appendChild(input)
+    formData.append("suspicious", "true")
   }
 
-  // ✅ DO NOT block — allow submission
+  try {
+    await fetch("https://radiant-frangollo-86ce26.netlify.app/", {
+      method: "POST",
+      body: formData
+    })
+
+    alert("Message sent successfully!")
+    form.reset()
+
+  } catch (error) {
+    console.error(error)
+    alert("Something went wrong. Try again.")
+  }
 }
 </script>
 
 <template>
   <section class="mt-16 max-w-2xl mx-auto bg-zinc-50 dark:bg-zinc-900/40 p-8 rounded-3xl shadow-sm">
-    
+
     <form 
       name="contact"
       method="POST"
       data-netlify="true"
-      netlify-honeypot="website"
-      @submit="handleSubmit"
+      data-netlify-honeypot="website"
+      @submit.prevent="handleSubmit"
       class="space-y-6"
     >
       <!-- Netlify required -->
       <input type="hidden" name="form-name" value="contact" />
 
-      <!-- 🪤 Honeypot -->
+      <!-- 🪤 Honeypot (hidden from users) -->
       <div style="position:absolute; left:-9999px;">
         <label>Don’t fill this out if you're human:</label>
         <input type="text" name="website" tabindex="-1" autocomplete="off" />
