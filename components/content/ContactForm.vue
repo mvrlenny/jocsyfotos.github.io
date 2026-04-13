@@ -14,7 +14,7 @@ onMounted(() => {
 })
 
 // 🧠 Handle submit (Netlify + Anti-spam)
-const handleSubmit = async (e) => {
+const handleSubmit = (e) => {
   const form = e.target
   const timeTaken = Date.now() - startTime.value
   const honeypot = form.website?.value
@@ -33,46 +33,41 @@ const handleSubmit = async (e) => {
     isSuspicious = true
   }
 
-  // 🧠 Attach hidden flags
-  const formData = new FormData(form)
-  formData.append("form-name", "contact")
-  formData.append("timeTaken", timeTaken.toString())
+  // 🧠 Attach hidden fields so Netlify receives them
+  const inputTime = document.createElement('input')
+  inputTime.type = 'hidden'
+  inputTime.name = 'timeTaken'
+  inputTime.value = timeTaken
+  form.appendChild(inputTime)
 
   if (isSuspicious) {
-    formData.append("suspicious", "true")
+    const inputSuspicious = document.createElement('input')
+    inputSuspicious.type = 'hidden'
+    inputSuspicious.name = 'suspicious'
+    inputSuspicious.value = 'true'
+    form.appendChild(inputSuspicious)
   }
 
-  try {
-    await fetch("https://radiant-frangollo-86ce26.netlify.app/", {
-      method: "POST",
-      body: formData
-    })
-
-    alert("Message sent successfully!")
-    form.reset()
-
-  } catch (error) {
-    console.error(error)
-    alert("Something went wrong. Try again.")
-  }
+  // ✅ Allow normal form submission to Netlify
+  // No fetch, no preventDefault — just submit
 }
 </script>
 
 <template>
   <section class="mt-16 max-w-2xl mx-auto bg-zinc-50 dark:bg-zinc-900/40 p-8 rounded-3xl shadow-sm">
-
     <form 
       name="contact"
       method="POST"
       data-netlify="true"
-      data-netlify-honeypot="website"
-      @submit.prevent="handleSubmit"
+      netlify-honeypot="website"
+      action="/thank-you.html"
+      @submit="handleSubmit"
       class="space-y-6"
     >
       <!-- Netlify required -->
       <input type="hidden" name="form-name" value="contact" />
 
-      <!-- 🪤 Honeypot (hidden from users) -->
+      <!-- 🪤 Honeypot (hidden) -->
       <div style="position:absolute; left:-9999px;">
         <label>Don’t fill this out if you're human:</label>
         <input type="text" name="website" tabindex="-1" autocomplete="off" />
@@ -163,7 +158,6 @@ const handleSubmit = async (e) => {
       <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-2">
         We respect your privacy. Your information will only be used to respond to your inquiry.
       </p>
-
     </form>
   </section>
 </template>
