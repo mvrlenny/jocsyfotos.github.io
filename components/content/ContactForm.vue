@@ -13,7 +13,7 @@ onMounted(() => {
   startTime.value = Date.now()
 })
 
-// 🧠 Handle submit (Netlify + Anti-spam)
+// 🧠 Handle submit (Formspree + Anti-spam)
 const handleSubmit = (e) => {
   const form = e.target
   const timeTaken = Date.now() - startTime.value
@@ -27,13 +27,13 @@ const handleSubmit = (e) => {
     isSuspicious = true
   }
 
-  // ⏱️ Too fast
+  // ⏱️ Too fast (bot-like behavior)
   if (timeTaken < 3000) {
     console.warn(`⚠️ Too fast (${timeTaken}ms)`)
     isSuspicious = true
   }
 
-  // 🧠 Attach hidden fields so Netlify receives them
+  // 🧠 Attach hidden tracking fields
   const inputTime = document.createElement('input')
   inputTime.type = 'hidden'
   inputTime.name = 'timeTaken'
@@ -48,26 +48,22 @@ const handleSubmit = (e) => {
     form.appendChild(inputSuspicious)
   }
 
-  // ✅ Allow normal form submission to Netlify
-  // No fetch, no preventDefault — just submit
+  // IMPORTANT:
+  // We DO NOT prevent default — Formspree handles submission
 }
 </script>
 
 <template>
   <section class="mt-16 max-w-2xl mx-auto bg-zinc-50 dark:bg-zinc-900/40 p-8 rounded-3xl shadow-sm">
+
     <form 
-      name="contact"
+      action="https://formspree.io/f/mykljnzo"
       method="POST"
-      data-netlify="true"
-      netlify-honeypot="website"
-      action="/thank-you.html"
       @submit="handleSubmit"
       class="space-y-6"
     >
-      <!-- Netlify required -->
-      <input type="hidden" name="form-name" value="contact" />
 
-      <!-- 🪤 Honeypot (hidden) -->
+      <!-- 🪤 Honeypot (anti-bot) -->
       <div style="position:absolute; left:-9999px;">
         <label>Don’t fill this out if you're human:</label>
         <input type="text" name="website" tabindex="-1" autocomplete="off" />
@@ -75,25 +71,39 @@ const handleSubmit = (e) => {
 
       <!-- Name -->
       <div>
-        <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">Full Name</label>
-        <input type="text" name="name" required
-          class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:ring-2 focus:ring-black/20 outline-none"
+        <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">
+          Full Name
+        </label>
+        <input 
+          type="text" 
+          name="name" 
+          required
+          class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800"
         />
       </div>
 
       <!-- Email -->
       <div>
-        <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">Email</label>
-        <input type="email" name="email" required
-          class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800 focus:ring-2 focus:ring-black/20 outline-none"
+        <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">
+          Email
+        </label>
+        <input 
+          type="email" 
+          name="email" 
+          required
+          class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800"
         />
       </div>
 
       <!-- Session -->
       <div>
-        <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">Type of Session</label>
-        <select name="session"
-          class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
+        <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">
+          Type of Session
+        </label>
+        <select 
+          name="session"
+          class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800"
+        >
           <option>Portraits & Personal Moments</option>
           <option>Events & Celebrations</option>
           <option>Brands, Products, & Businesses</option>
@@ -106,15 +116,21 @@ const handleSubmit = (e) => {
 
       <!-- Message -->
       <div>
-        <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">Tell us about your vision</label>
-        <textarea name="message" rows="5"
+        <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">
+          Tell us about your vision
+        </label>
+        <textarea 
+          name="message" 
+          rows="5"
           class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800"
         ></textarea>
       </div>
 
       <!-- Date -->
       <div>
-        <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">Preferred Date</label>
+        <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">
+          Preferred Date
+        </label>
         <input 
           type="date"
           name="date"
@@ -126,7 +142,9 @@ const handleSubmit = (e) => {
 
       <!-- Time -->
       <div>
-        <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">Preferred Start Time</label>
+        <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">
+          Preferred Start Time
+        </label>
         <input
           type="text"
           name="startTime"
@@ -137,10 +155,14 @@ const handleSubmit = (e) => {
 
       <!-- Budget -->
       <div>
-        <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">Estimated Budget</label>
-        <select name="budget"
-          class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800">
-          <option>$150 – $400</option>
+        <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">
+          Estimated Budget
+        </label>
+        <select 
+          name="budget"
+          class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800"
+        >
+          <option>$200 – $400</option>
           <option>$400 – $800</option>
           <option>$800 – $1,500</option>
           <option>$1,500+</option>
@@ -150,7 +172,9 @@ const handleSubmit = (e) => {
 
       <!-- Submit -->
       <button
-        class="w-full py-4 text-lg font-semibold rounded-xl bg-black text-white hover:bg-zinc-800 transition-all">
+        type="submit"
+        class="w-full py-4 text-lg font-semibold rounded-xl bg-black text-white hover:bg-zinc-800 transition-all"
+      >
         Send Inquiry
       </button>
 
@@ -158,6 +182,7 @@ const handleSubmit = (e) => {
       <p class="text-sm text-zinc-500 dark:text-zinc-400 mt-2">
         We respect your privacy. Your information will only be used to respond to your inquiry.
       </p>
+
     </form>
   </section>
 </template>
