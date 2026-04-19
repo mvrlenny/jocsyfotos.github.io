@@ -95,6 +95,30 @@ const handleSubmit = (e) => {
         />
       </div>
 
+      <!-- Phone Number -->
+      <div>
+        <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">
+          Phone Number
+        </label>
+        <input 
+          type="tel" 
+          name="phone" 
+          class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800"
+        />
+      </div>
+
+      <!-- Location -->
+      <div>
+        <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">
+          Location
+        </label>
+        <input 
+          type="text" 
+          name="location" 
+          class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800"
+        />
+      </div>
+
       <!-- Session -->
       <div>
         <label class="block mb-2 font-medium text-zinc-700 dark:text-zinc-300">
@@ -162,7 +186,7 @@ const handleSubmit = (e) => {
           name="budget"
           class="w-full p-4 rounded-xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-800"
         >
-          <option>$200 – $400</option>
+          <option>$250 – $400</option>
           <option>$400 – $800</option>
           <option>$800 – $1,500</option>
           <option>$1,500+</option>
